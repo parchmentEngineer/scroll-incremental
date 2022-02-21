@@ -1,0 +1,65 @@
+body {
+  padding: 15px;
+  padding-top: 25px;
+}
+nav {
+  padding: 25px;
+}
+h1 {
+  padding-left: 25px;
+}
+.tab-content {
+  padding-left: 30px;
+}
+.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+.left-border {
+  border-style: none none none solid;
+  border-width: 1px
+}
+.shop-btn {
+	display: flex;
+	justify-content: flex-end;
+	padding-top:4px;
+	padding-bottom:4px;
+}
+.overflow-auto {
+	padding: 4px;
+}
+
+.fadeIn {
+	opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 0.5s;
+}
+
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.fadeOut {
+	opacity: 0;
+	animation-name: fadeOutOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 0.5s;
+}
+
+@keyframes fadeOutOpacity {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}

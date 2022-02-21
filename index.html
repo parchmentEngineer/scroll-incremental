@@ -1,0 +1,198 @@
+<html>
+	<head>
+		<title>Scroll Incremental</title>
+		
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="style.css" rel="stylesheet">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+		<!--<script type="text/javascript" src="merge.js"></script>
+		<script type="text/javascript" id="mergedScript"></script>-->
+		
+	</head>
+	<body>
+	
+		<div class="row" style="height:90px">
+		  <div class="col-sm-4">
+		    <h1>Scroll Incremental</h1>
+		  </div>
+		  <div class="col-sm-4">
+		  <span id="activeTrans" style="display: none">
+			<h5>Active Translation: <span id="activeTransName">None</span><h5>
+			<div class="progress">
+			  <div id="activeTransBar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+			</div>
+		  </span>
+		  <span id="activePerformance" style="display: none">
+			<h5>Active Performance: <span id="activePerformanceName">None</span><h5>
+			<div class="progress">
+			  <div id="activePerformanceBar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+			</div>
+		  </span>
+		  </div>
+		  <div class="col-sm-1 left-border">
+		    <b>Gold: </b><span id="statsGold">0</span><br>
+			<b>Mana: </b><span id="statsMana">0</span><br>
+			<b>Renown: </b><span id="statsRenown">0</span><br>
+		  </div>
+		  <div class="col-sm-3 left-border">
+			<p id="buffs"></p>
+		  </div>
+		</div>
+	
+		<nav>
+		  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+			<button class="nav-link active" id="nav-scrolls-tab" data-bs-toggle="tab" data-bs-target="#nav-scrolls" type="button" role="tab" aria-controls="nav-scrolls-tab" aria-selected="true">Scrolls</button>
+			<button class="nav-link" style="display: none" id="nav-magic-tab" data-bs-toggle="tab" data-bs-target="#nav-magic" type="button" role="tab" aria-controls="nav-magic" aria-selected="false">Magic</button>
+			<button class="nav-link" style="display: none" id="nav-town-tab" data-bs-toggle="tab" data-bs-target="#nav-town" type="button" role="tab" aria-controls="nav-town" aria-selected="false">Town</button>
+		  </div>
+		</nav>
+		
+		<!--Menu for just inside the main tabs-->
+		<div class="tab-content" id="nav-tabContent">
+		  <div class="tab-pane fade show active" id="nav-scrolls" role="tabpanel" aria-labelledby="nav-scrolls-tab" style="width:93vw"> <!--Scrolls Tab-->
+		  <span id="scrolls-showAtStart">
+			<figure class="text-center fadeIn">You've had to give up almost everything to get to this point: At the doors to an unfamiliar town, clutching two ancient
+			<br>scrolls in your hand. Though they may seem worthless to some, these scrolls could provide the secret to power
+			<br>eternal - if only you could read their words. Undeterred, you prepare to begin the translation process.
+			<br><br><button type="button" class="btn btn-primary btn-lg" onclick="beginGame()">Begin</button></figure>
+		  </span>
+		  <span id="scrolls-hideAtStart" style="display: none">
+		    <div id="statsTranslation">Translation Speed: 1 Word/second</div><hr>
+			<div class="d-flex align-items-start">
+			  <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+				<button class="nav-link active" id="v-pills-ancient-tongue-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ancient-tongue" type="button" role="tab" aria-controls="v-pills-ancient-tongue" aria-selected="true">Scroll of the Ancient Tongue</button>
+				<button class="nav-link" id="v-pills-first-light-tab" data-bs-toggle="pill" data-bs-target="#v-pills-first-light" type="button" role="tab" aria-controls="v-pills-first-light" aria-selected="false">Scroll of the First Light</button>
+				<button class="nav-link" id="scrollTab-flowingMetal" style="display: none" data-bs-toggle="pill" data-bs-target="#v-pills-flowing-metal" type="button" role="tab" aria-controls="v-pills-flowing-metal" aria-selected="false">Scroll of the Flowing Metal</button>
+
+			  </div>
+			  
+			  <div class="tab-content" id="v-pills-tabContent">
+				<div class="tab-pane fade show active" id="v-pills-ancient-tongue" role="tabpanel" aria-labelledby="v-pills-ancient-tongue-tab">
+				  <div class="container overflow-auto" style="width:70vw; height:60vh;" id="scroll-ancientTongue"></div>
+				</div>
+				<div class="tab-pane fade" id="v-pills-first-light" role="tabpanel" aria-labelledby="v-pills-first-light-tab">
+				  <div class="container overflow-auto" style="width:70vw; height:60vh;" id="scroll-firstLight"></div>
+				</div>
+				<div class="tab-pane fade" id="v-pills-flowing-metal" role="tabpanel" aria-labelledby="v-pills-flowing-metal-tab">
+				  <div class="container overflow-auto" style="width:70vw; height:60vh;" id="scroll-flowingMetal"></div>
+				</div>
+			  </div>
+			  
+			</div>
+		  </span>
+		  </div>
+		  
+		  <div class="tab-pane fade" id="nav-magic" role="tabpanel" aria-labelledby="nav-magic-tab"> <!--Magic Tab-->
+			<div class="container" style="width:100%">
+				<div class="row">
+				  <div class="col-sm-2">
+					<div id="manaMax">Maximum Mana: 0</div>
+					<div id="manaRegen">Mana Regen: 0</div>
+				  </div>
+				  <div class="col-sm-10">
+					<b style="font-size: 30;" id="manaTot">Mana: 0</b>
+				  </div>
+				</div><br>
+				<div class="row">
+				  <div class="col-sm-12">
+					<div class="progress">
+					  <div class="progress-bar" id="manaBar" role="progressbar" style="width: 0%"></div>
+					</div>
+				  </div>
+				</div><br><hr>
+			</div>
+			
+			<div class="d-flex align-items-start">
+			  <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+				<button class="nav-link active" id="v-pills-performance-tab" data-bs-toggle="pill" data-bs-target="#v-pills-performance" type="button" role="tab" aria-controls="v-pills-performance" aria-selected="true">Performance Spells</button>
+				<button class="nav-link" id="v-pills-buff-tab" data-bs-toggle="pill" data-bs-target="#v-pills-buff" type="button" role="tab" aria-controls="v-pills-buff" aria-selected="false">Buff Spells</button>
+				<button class="nav-link" id="v-pills-transmutation-tab" data-bs-toggle="pill" data-bs-target="#v-pills-transmutation" type="button" role="tab" aria-controls="v-pills-transmutation" aria-selected="false">Transmutation Spells</button>
+			  </div>
+
+			  
+			  <div class="tab-content" id="v-pills-tabContent">
+				<div class="tab-pane fade show active span12" id="v-pills-performance" role="tabpanel" aria-labelledby="v-pills-performance-tab" style="width:75vw;">
+				  <p><b>Note: </b>Performance spells can only be cast during performances.</p>
+				  <div class="row" style="width:auto" id="spellCat-performance-1"></div><br>
+				  <div class="row" style="width:auto" id="spellCat-performance-2"></div><br>
+				</div>
+			
+				<div class="tab-pane fade hide span12" id="v-pills-buff" role="tabpanel" aria-labelledby="v-pills-buff-tab" style="width:75vw;">
+				  <div class="row" style="width:auto" id="spellCat-buff-1"></div><br>
+				</div>
+				
+				<div class="tab-pane fade hide span12" id="v-pills-transmutation" role="tabpanel" aria-labelledby="v-pills-buff-tab" style="width:75vw;">
+				  <div class="row" style="width:auto" id="spellCat-transmutation-1"></div><br>
+				</div>
+
+			  </div>
+			</div>
+		  </div>
+		  
+		  <div class="tab-pane fade" id="nav-town" role="tabpanel" aria-labelledby="nav-town-tab">
+		    <div class="d-flex align-items-start">
+			  <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical" style="width:15vw">
+			    <button class="nav-link active" id="v-pills-renown-tab" data-bs-toggle="pill" data-bs-target="#v-pills-renown" type="button" role="tab" aria-controls="v-pills-renown" aria-selected="true">Renown</button>
+			    <hr style="margin-bottom:5;"><span>Shops</span><hr style="margin-top:7;">
+				<button class="nav-link" id="v-pills-inkyQuill-tab" data-bs-toggle="pill" data-bs-target="#v-pills-inkyQuill" type="button" role="tab" aria-controls="v-pills-inkyQuill" aria-selected="false">The Inky Quill</button>
+				<button class="nav-link" style="display: none;" id="shopTab-durinCurosities" data-bs-toggle="pill" data-bs-target="#v-pills-durinCurosities" type="button" role="tab" aria-controls="v-pills-durinCurosities" aria-selected="false">Durrin's Curiosities</button>
+				<hr style="margin-bottom:5;"><span>Performance Spaces</span><hr  style="margin-top:7;">
+				<button class="nav-link" id="v-pills-streetCorner-tab" data-bs-toggle="pill" data-bs-target="#v-pills-streetCorner" type="button" role="tab" aria-controls="v-pills-streetCorner" aria-selected="false">Street Corner</button>
+				<button class="nav-link" style="display: none;" id="shopTab-inkyStage" data-bs-toggle="pill" data-bs-target="#v-pills-inkyStage" type="button" role="tab" aria-controls="v-pills-inkyStage" aria-selected="false">The Inky Quill Stage</button>
+			  </div>
+			  
+			  <div class="tab-content" id="v-pills-tabContent" style="width:76vw">
+			    <div class="tab-pane fade show active" id="v-pills-renown" role="tabpanel" aria-labelledby="v-pills-renown-tab">
+				<i>Renown represents both how well you know the town, and how well the town knows you. As you perform, your renown will increase, giving you access to more opportunities.</i><hr>
+				<div id="renown"></div>
+				</div>
+			  
+				<div class="tab-pane fade" id="v-pills-inkyQuill" role="tabpanel" aria-labelledby="v-pills-inkyQuill-tab">
+				<i>An old bar known to attract a few writers. It also contains a general store which sells various types of writing equipment. Not exactly a premier scholarly institution, but it’ll do until you can afford something better. In the meantime, why not grab something to drink?</i><hr>
+				<div id="shop-inkyQuill"></div>
+				</div>
+				
+				<div class="tab-pane fade" id="v-pills-durinCurosities" role="tabpanel" aria-labelledby="v-pills-durinCurosities-tab">
+				<i>As you’ve gotten more familiar with the town, you’ve heard odd rumors about Durin’s Curiosities that might indicate that it has what you need. The sign out front seems quite worn down, but the various items for sale have been carefully polished and maintained.</i><hr>
+				<div id="shop-durinCurosities"></div>
+				</div>
+				
+				<div class="tab-pane fade" id="v-pills-streetCorner" role="tabpanel" aria-labelledby="v-pills-streetCorner-tab">
+					<span id="performanceIntro">
+						<figure class="text-center">Performances represent an opportunity to show off your magic to a crowd in order to earn gold and renown.
+						<br>Use the routine menu to set up a list of spells to execute during the performance. While the performance
+						<br>lasts, each spell in the sequence will be automatically cast when ready. The max potential cost is based
+						<br>off your max mana, mana regen, and performance duration.
+						<br><br><button type="button" class="btn btn-primary btn-lg" onclick="beginPerformance()">Understood</button></figure>
+					</span>
+					<div id="performance-Street Corner" style="display: none"></div>
+				</div>
+				<div class="tab-pane fade" id="v-pills-inkyStage" role="tabpanel" aria-labelledby="v-pills-inkyStage-tab">
+					<div id="performance-The Inky Quill Stage"></div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		
+		<span id="alertsZone" style="position: absolute; bottom: 40px; right: 40px;"></span>
+
+		<script type="text/javascript" src="script/def/research.js"></script>
+		<script type="text/javascript" src="script/def/spells.js"></script>
+		<script type="text/javascript" src="script/def/buffs.js"></script>
+		<script type="text/javascript" src="script/def/buyables.js"></script>
+		<script type="text/javascript" src="script/def/performances.js"></script>
+		<script type="text/javascript" src="script/def/renownLevels.js"></script>
+		<script type="text/javascript" src="script/func/funcResearch.js"></script>
+		<script type="text/javascript" src="script/func/funcSpells.js"></script>
+		<script type="text/javascript" src="script/func/funcBuffs.js"></script>
+		<script type="text/javascript" src="script/func/funcBuyables.js"></script>
+		<script type="text/javascript" src="script/func/funcPerformances.js"></script>
+		<script type="text/javascript" src="script/func/funcRenown.js"></script>
+		<script type="text/javascript" src="script/func/funcUtility.js"></script>
+		<script type="text/javascript" src="script/main.js"></script>
+		
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	</body>
+</html>
