@@ -1,5 +1,5 @@
 translationSpeed = 1;
-transSpeedBase = 1000;
+transSpeedBase = 1;
 transSpeedResearchMult = 1;
 transSpeedBuffMult = 1;
 
