@@ -22,7 +22,6 @@ function startPerformance(performanceName) {
 }
 
 function addSpellToRoutine(spellName, performanceName) {
-	alert(performanceName);
 	spell = find(spellName, spells);
 	perf = find(performanceName, performances);
 	perf.routine.push(spell);
