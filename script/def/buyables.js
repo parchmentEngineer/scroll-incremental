@@ -71,9 +71,9 @@ buyables.push ({ //Runic Trinket
 	onBuy: function() {}
 });
 buyables.push ({ //Scroll of Flowing Metal
-	name: "Scroll of Flowing Metal",
+	name: "Scroll of the Flowing Metal",
 	shop: "durinCurosities",
-	descr: "A new scroll, written in the same archaic script as the first two. You must have it.",
+	descr: "A new scroll, written in the same archaic script as the first two.",
 	cost: 600,
 	costScaling: function() {
 		return 600;
@@ -81,8 +81,24 @@ buyables.push ({ //Scroll of Flowing Metal
 	amount: 0,
 	onBuy: function() {
 		document.getElementById("scrollTab-flowingMetal").style.display = "block";
-		fadeOut(document.getElementById("shopRow-Scroll of Flowing Metal"));
-		setTimeout(function() {document.getElementById("shopRow-Scroll of Flowing Metal").style.display = "none";}, 500);
+		fadeOut(document.getElementById("shopRow-Scroll of the Flowing Metal"));
+		setTimeout(function() {document.getElementById("shopRow-Scroll of the Flowing Metal").style.display = "none";}, 500);
+		this.amount = 0;
+	}
+});
+buyables.push ({ //Scroll of Ponderous Orb
+	name: "Scroll of the Ponderous Orb",
+	shop: "durinCurosities",
+	descr: "A fourth scroll, even more precious than the last. It glows with a visible aura.",
+	cost: 3500,
+	costScaling: function() {
+		return 3500;
+	},
+	amount: 0,
+	onBuy: function() {
+		document.getElementById("scrollTab-ponderousOrb").style.display = "block";
+		fadeOut(document.getElementById("shopRow-Scroll of the Ponderous Orb"));
+		setTimeout(function() {document.getElementById("shopRow-Scroll of the Ponderous Orb").style.display = "none";}, 500);
 		this.amount = 0;
 	}
 });

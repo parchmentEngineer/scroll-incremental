@@ -9,6 +9,7 @@ function startPerformance(performanceName) {
 		performancePointer = 0;
 		prevProfit = 0;
 		prevRenown = 0;
+		prevSpells = 0;
 		spells.forEach(function(value) {
 			elems = document.getElementsByClassName('perfSpellBtn-'+value.name.replace(/ /g, "-"));
 			for (var i = 0, len = elems.length; i < len; i++) {
@@ -39,6 +40,7 @@ function tickPerformance(value) {
 		value.duration -= 1;
 		value.prevProfit = prevProfit;
 		value.prevRenown = prevRenown;
+		value.prevSpells = prevSpells;
 		if(performancePointer > -1) {
 			if(mana >= value.routine[performancePointer].mana) {
 				findCastSpell(value.routine[performancePointer].name);
@@ -57,14 +59,15 @@ function tickPerformance(value) {
 			performancePointer = -1;
 			prevProfit = 0;
 			prevRenown = 0;
+			prevSpells = 0;
 			spells.forEach(function(value2) {
 				elems = document.getElementsByClassName('perfSpellBtn-'+value2.name.replace(/ /g, "-"));
 				for (var i = 0, len = elems.length; i < len; i++) {
 					if(elems[i].classList.contains("perfSpellBtnIn-"+value.name.replace(/ /g, "-"))) {elems[i].classList.remove("disabled")};
 				}
 			});
-			find("Light Show", buffs).amount = 0;
-			find("Light Show", buffs).active = false;
+			removeBuff("Light Show");
+			removeBuff("Mana Well");
 		}
 	}
 	if(value.recharge > 0) {
@@ -102,12 +105,14 @@ function displayPerformance(value) {
 	if(value.active) {
 		value.prevProfit = prevProfit;
 		value.prevRenown = prevRenown;
+		value.prevSpells = prevSpells;
 	}
 	value.routine.forEach(function(value) {tempCurrentCost += value.mana});
 	document.getElementById("perfCurrentCost-"+value.name).innerHTML = tempCurrentCost;
 	document.getElementById("perfMaxCost-"+value.name).innerHTML = manaMax + (manaRegen * value.maxDuration);
 	document.getElementById("prevProfit-"+value.name).innerHTML = formatNumber(value.prevProfit);
 	document.getElementById("prevRenown-"+value.name).innerHTML = formatNumber(value.prevRenown);
+	document.getElementById("prevSpells-"+value.name).innerHTML = formatNumber(value.prevSpells);
 }
 
 function gainPerformanceGold(amt) {
@@ -120,7 +125,8 @@ function getPerformanceMult() {
 	temp = 0;
 	temp += 1
 		* (1+(find("Posters", buyables).amount * 0.25))
-		* ((find("Poet's Brew", buffs).active) ? 1.5 : 1);
+		* ((find("Poet's Brew", buffs).active) ? 1.5 : 1
+		* ((find("Immortalize in Gold", buffs).active) ? 2 : 1));
 	return temp;
 }
 
@@ -157,18 +163,21 @@ function createPerformance(value) {
 	</div><br><hr>
 	
 	<div class="row">
-		<div class="col-sm-5">
+		<div class="col-sm-5 overflow-auto" style="height:45vh;">
 			<h5><b>Performace routine:</b></h5>
 			Current cost: <span id="perfCurrentCost-`+value.name+`">0</span> | Max potential cost: <span id="perfMaxCost-`+value.name+`">0</span><br>
 			Profit from most recent performance here: <span id="prevProfit-`+value.name+`">0</span><br>
-			Renown from most recent performance here: <span id="prevRenown-`+value.name+`">0</span><hr>
+			Renown from most recent performance here: <span id="prevRenown-`+value.name+`">0</span><br>
+			Spells cast in most recent performance here: <span id="prevSpells-`+value.name+`">0</span><hr>
 			<div class="list-group" id="performanceRoutine-`+value.name+`">
 				<button type="button" class="list-group-item list-group-item-action">A second item</button>
 			</div>
 		</div>
-		<div class="col-sm-7" >
+		<div class="col-sm-7 overflow-auto" style="height:45vh;" >
 			<div class="row" style="width:100%" id="spellCat-`+value.name+`-1"></div><br>
 			<div class="row" style="width:100%" id="spellCat-`+value.name+`-2"></div><br>
+			<div class="row" style="width:100%" id="spellCat-`+value.name+`-3"></div><br>
+			<div class="row" style="width:100%" id="spellCat-`+value.name+`-4"></div><br>
 		</div>
 	</div>
 	`;

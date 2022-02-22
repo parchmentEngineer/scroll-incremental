@@ -23,13 +23,20 @@ function tickBuffs(value) {
 	if(value.active) {
 		if(value.stacking == "time-set") {
 			value.amount -= 1;
-			if(value.amount == 0) {
+			if(value.amount < 0) {
 				value.active = false;
 				value.onRemove();
 			}
 		}
 		value.onTick();
 	}
+}
+
+function removeBuff(buffName) {
+	buff = find(buffName, buffs);
+	buff.active = false;
+	buff.amount = 0;
+	buff.onRemove();
 }
 
 function displayBuffs(value) {

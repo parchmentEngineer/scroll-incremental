@@ -38,6 +38,44 @@ spells.push({ //Grand Finale
 		gainPerformanceRenown(find("Light Show",buffs).amount * 5);
 	}
 });
+spells.push({ //Immortalize in Gold
+	name: "Immortalize in Gold",
+	descr: "Double your performance Gold gain for the next 5 seconds.",
+	category: "performance",
+	num: 4,
+	mana: 8,
+	performance: true,
+	unlocked: false,
+	onCast: function() {
+		findActivateBuff("Immortalize in Gold", 5);
+	}
+});
+spells.push({ //Display of Power
+	name: "Display of Power",
+	descr: "Gain <span class=\"spellGold mult80\"></span> Gold and <span class=\"spellRenown mult12\"></span> Renown.",
+	category: "performance",
+	num: 5,
+	mana: 25,
+	performance: true,
+	unlocked: false,
+	onCast: function() {
+		gainPerformanceGold(80);
+		gainPerformanceRenown(12);
+	}
+});
+spells.push({ //Mana Well
+	name: "Mana Well",
+	descr: "After you cast two more performance spells, gain 20 mana immediately.",
+	category: "performance",
+	num: 6,
+	mana: 7,
+	performance: true,
+	unlocked: false,
+	onCast: function() {
+		findActivateBuff("Mana Well", 3);
+	}
+});
+
 
 spells.push({ //Burst of Insight
 	name: "Burst of Insight",
@@ -54,14 +92,14 @@ spells.push({ //Burst of Insight
 
 spells.push({ //Gold Synthesis
 	name: "Gold Synthesis",
-	descr: "Gain 8 Gold.",
+	descr: "Gain 5 Gold.",
 	category: "transmutation",
 	num: 1,
-	mana: 5,
+	mana: 2,
 	performance: false,
 	unlocked: false,
 	onCast: function() {
-		gold += 8;
+		gold += 5;
 	}
 });
 spells.push({ //Sculpturecraft

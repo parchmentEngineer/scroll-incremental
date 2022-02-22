@@ -47,6 +47,21 @@ research.push({ //Verbal Introductions
 	complete: false,
 	onComplete: function() {}
 });
+research.push({ //Insightful Study
+	name: "Insightful Study",
+	inScroll: "ancientTongue",
+	descr: "The Burst of Insight spell now lasts for 3x as long.",
+	words: 0,
+	maxWords: 4000,
+	active: false,
+	complete: false,
+	onComplete: function() {
+		burstOfInsight = find("Burst of Insight", spells)
+		burstOfInsight.onCast = function() {findActivateBuff("Burst of Insight", 30);}
+		fadePulse(document.getElementById("spellDescr-"+burstOfInsight.name));
+		updateSpellDescr("Burst of Insight", "Gain a x3 multiplier to Translation Speed for 30 seconds.");
+	}
+});
 
 //-- Scroll of the First Light --
 research.push({ //Fundamentals Of Magic
@@ -151,12 +166,95 @@ research.push({ //Sculpturecraft
 research.push({ //Particle Accumulation
 	name: "Metalic Flow",
 	inScroll: "flowingMetal",
-	descr: "Gain 2 Gold per second.",
+	descr: "Gain 4 Gold per second.",
 	words: 0,
 	maxWords: 6000,
 	active: false,
 	complete: false,
+	onComplete: function() {}
+});
+research.push({ //Live Demonstration
+	name: "Live Demonstration",
+	inScroll: "flowingMetal",
+	descr: "Gold Synthesis and Metalic Flow now scale off your base performance Gold multiplier.",
+	words: 0,
+	maxWords: 8000,
+	active: false,
+	complete: false,
 	onComplete: function() {
-		goldPerSecBase += 2;
+		goldSynthesis = find("Gold Synthesis", spells)
+		goldSynthesis.onCast = function() {gold += 5*getPerformanceMult();}
+		updateSpellDescr("Gold Synthesis", "Gain <span class=\"spellGoldNoPerf mult5\"></span> Gold. (Scales off base performance multiplier)");
+		document.getElementById("researchDescr-Metalic Flow").innerHTML = "Gain <span class=\"spellGoldNoPerf mult4\"></span> Gold per second (Scales off base performance multiplier)."
 	}
+});
+research.push({ //Immortalize in Gold
+	name: "Immortalize in Gold",
+	inScroll: "flowingMetal",
+	descr: "Unlocks the performance spell Immortalize in Gold, which doubles your performance Gold gained for the next 5 seconds.",
+	words: 0,
+	maxWords: 10000,
+	active: false,
+	complete: false,
+	onComplete: function() {
+		findUnlockSpell("Immortalize in Gold");
+	}
+});
+
+// -- Scroll of the Ponderous Orb --
+research.push({ //Display of Power
+	name: "Display of Power",
+	inScroll: "ponderousOrb",
+	descr: "Unlocks the performance spell Display of Power, which costs a great deal of mana put produces even greater Gold and Renown.",
+	words: 0,
+	maxWords: 10000,
+	active: false,
+	complete: false,
+	onComplete: function() {
+		findUnlockSpell("Display of Power");
+	}
+});
+research.push({ //Unseen Depths
+	name: "Unseen Depths",
+	inScroll: "ponderousOrb",
+	descr: "Increases your base maximum mana by 25.",
+	words: 0,
+	maxWords: 12000,
+	active: false,
+	complete: false,
+	onComplete: function() {
+		manaMaxBase += 25;
+	}
+});
+research.push({ //Mana Well
+	name: "Mana Well",
+	inScroll: "ponderousOrb",
+	descr: "Unlocks the performance spell Mana Well, which generates mana after casting two more performance spells after it. (Does not stack if used multiple times in a row).",
+	words: 0,
+	maxWords: 15000,
+	active: false,
+	complete: false,
+	onComplete: function() {
+		findUnlockSpell("Mana Well");
+	}
+});
+research.push({ //Overflowing
+	name: "Overflowing",
+	inScroll: "ponderousOrb",
+	descr: "While your mana is full, accumulate a buff that increases your mana regen by 1.5x while active, up to a maximum of 45 seconds.",
+	words: 0,
+	maxWords: 20000,
+	active: false,
+	complete: false,
+	onComplete: function() {}
+});
+research.push({ //Twin Stars 
+	name: "Twin Stars",
+	inScroll: "ponderousOrb",
+	descr: "Gain a 2x multiplier to your maximum mana.",
+	words: 0,
+	maxWords: 30000,
+	active: false,
+	complete: false,
+	onComplete: function() {}
 });

@@ -55,14 +55,38 @@ function castSpell(value) {
 		if(mana >= value.mana) {
 			mana -= value.mana;
 			value.onCast();
+			if(inPerformance) {prevSpells += 1}
+			
+			//Handling the Mana Well effect
+			well = find("Mana Well", buffs);
+			if(well.amount > 0) {
+				well.amount -= 1;
+				if(well.amount == 0) {
+					mana += 20;
+					if(mana > manaMax) {mana = manaMax;}
+					removeBuff("Mana Well");
+				}
+			}
 		}
 	}
+}
+
+function updateSpellDescr(spellName, descr) {
+	thisSpell = find(spellName, spells);
+	fadePulse(document.getElementById("spellDescr-"+thisSpell.name));
+	setTimeout(function() {thisSpell.descr = descr;
+	if(thisSpell.unlocked) {
+		document.getElementById("spellDescr-"+thisSpell.name).innerHTML = thisSpell.descr;
+	}}, 100);
 }
 
 function tickMana() {
 	mana += manaRegen;
 	if(mana > manaMax) {
 		mana = manaMax;
+		if(find("Overflowing", research).complete && find("Overflowing", buffs).amount < 45) {
+			findActivateBuff("Overflowing", find("Overflowing", buffs).amount+2);
+		}
 	}
 }
 
@@ -90,6 +114,10 @@ function displaySpellGold() {
 		for (var i = 0, len = elems.length; i < len; i++) {
 			elems[i].innerHTML = formatNumber(getPerformanceMult() * getClassMult(elems[i]));
 		}
+	}
+	elems = document.getElementsByClassName("spellGoldNoPerf")
+	for (var i = 0, len = elems.length; i < len; i++) {
+		elems[i].innerHTML = formatNumber(getPerformanceMult() * getClassMult(elems[i]));
 	}
 }
 
@@ -128,7 +156,7 @@ function createSpellInPerformance(value) {
 	//createAlert(value.name, "danger");
 	document.getElementById("spellCat-"+value.name+"-"+Math.ceil(currSpell.num/2)).innerHTML += `
 	<div class="col-sm-6"><div class="card" style="width:100%">
-		<h5 class="card-header"><span class="perfSpellTitle-`+currSpell.name.replace(/ /g, "-")+`">Locked</span></h5>
+		<h5 class="card-header" style="font-size: 19"><span class="perfSpellTitle-`+currSpell.name.replace(/ /g, "-")+`">Locked</span></h5>
 		<div class="card-body" style="height:100px">
 			<div class="row">
 			<div class="col-sm-9">

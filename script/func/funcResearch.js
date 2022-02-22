@@ -56,8 +56,8 @@ function createResearch(value) {
 	document.getElementById("scroll-"+value.inScroll).innerHTML += `
 	<div class="row">
 	  <div class="col-sm-9">
-		<b style="font-size: 20;">`+value.name+`</b> (`+value.maxWords+` Words) <br>
-		`+value.descr+`
+		<b style="font-size: 20;">`+value.name+`</b> (`+formatNumber(value.maxWords)+` Words) <br>
+		<span id="researchDescr-`+value.name+`">`+value.descr+`</span>
 	  </div>
 	  <div class="col-sm-2" style="display: flex; justify-content: flex-end">
 		<button type="button" id="researchButton-`+value.name+`" class="btn btn-primary" onclick="startResearch('`+value.name+`');">Translate</button>

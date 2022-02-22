@@ -11,6 +11,7 @@ performances.push({
 	active: false,
 	prevProfit: 0,
 	prevRenown: 0,
+	prevSpells: 0,
 	routine: []
 });
 performances.push({
@@ -24,5 +25,20 @@ performances.push({
 	active: false,
 	prevProfit: 0,
 	prevRenown: 0,
+	prevSpells: 0,
+	routine: []
+});
+performances.push({
+	name: "Theatre of the Commons",
+	descr: "A wide arena where the city’s lower class come to seek entertainment. The theatre’s owners take a large cut of the profits, but a good performance should more than offset that.",
+	mult: 1,
+	maxDuration: 40,
+	duration: 0,
+	recharge: 0,
+	maxRecharge: 480,
+	active: false,
+	prevProfit: 0,
+	prevRenown: 0,
+	prevSpells: 0,
 	routine: []
 });

@@ -10,7 +10,7 @@
 		<script type="text/javascript" id="mergedScript"></script>-->
 		
 	</head>
-	<body>
+	<body id="theBody">
 	
 		<div class="row" style="height:90px">
 		  <div class="col-sm-4">
@@ -32,8 +32,11 @@
 		  </div>
 		  <div class="col-sm-1 left-border">
 		    <b>Gold: </b><span id="statsGold">0</span><br>
-			<b>Mana: </b><span id="statsMana">0</span><br>
 			<b>Renown: </b><span id="statsRenown">0</span><br>
+			<b>Mana: </b><span id="statsMana">0</span><br>
+			<div class="progress">
+			  <div class="progress-bar" id="miniManaBar" role="progressbar" style="width: 0%"></div>
+			</div>
 		  </div>
 		  <div class="col-sm-3 left-border">
 			<p id="buffs"></p>
@@ -44,7 +47,9 @@
 		  <div class="nav nav-tabs" id="nav-tab" role="tablist">
 			<button class="nav-link active" id="nav-scrolls-tab" data-bs-toggle="tab" data-bs-target="#nav-scrolls" type="button" role="tab" aria-controls="nav-scrolls-tab" aria-selected="true">Scrolls</button>
 			<button class="nav-link" style="display: none" id="nav-magic-tab" data-bs-toggle="tab" data-bs-target="#nav-magic" type="button" role="tab" aria-controls="nav-magic" aria-selected="false">Magic</button>
-			<button class="nav-link" style="display: none" id="nav-town-tab" data-bs-toggle="tab" data-bs-target="#nav-town" type="button" role="tab" aria-controls="nav-town" aria-selected="false">Town</button>
+			<button class="nav-link" style="display: none"id="nav-town-tab" data-bs-toggle="tab" data-bs-target="#nav-town" type="button" role="tab" aria-controls="nav-town" aria-selected="false">Town</button>
+			<button class="nav-link ms-auto " id="nav-info-tab" data-bs-toggle="tab" data-bs-target="#nav-info" type="button" role="tab" aria-controls="nav-info" aria-selected="false">Info</button>
+
 		  </div>
 		</nav>
 		
@@ -63,8 +68,8 @@
 			  <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 				<button class="nav-link active" id="v-pills-ancient-tongue-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ancient-tongue" type="button" role="tab" aria-controls="v-pills-ancient-tongue" aria-selected="true">Scroll of the Ancient Tongue</button>
 				<button class="nav-link" id="v-pills-first-light-tab" data-bs-toggle="pill" data-bs-target="#v-pills-first-light" type="button" role="tab" aria-controls="v-pills-first-light" aria-selected="false">Scroll of the First Light</button>
-				<button class="nav-link" id="scrollTab-flowingMetal" style="display: none" data-bs-toggle="pill" data-bs-target="#v-pills-flowing-metal" type="button" role="tab" aria-controls="v-pills-flowing-metal" aria-selected="false">Scroll of the Flowing Metal</button>
-
+				<button class="nav-link" id="scrollTab-flowingMetal" style="display: none" data-bs-toggle="pill" data-bs-target="#v-pills-flowing-metal" type="button" role="tab" aria-controls="v-pills-flowing-metal" aria-selected="false">Scroll of the Flowing Metal</button>				
+				<button class="nav-link" id="scrollTab-ponderousOrb" style="display: none" data-bs-toggle="pill" data-bs-target="#v-pills-ponderous-orb" type="button" role="tab" aria-controls="v-pills-ponderous-orb" aria-selected="false">Scroll of the Ponderous Orb</button>
 			  </div>
 			  
 			  <div class="tab-content" id="v-pills-tabContent">
@@ -76,6 +81,9 @@
 				</div>
 				<div class="tab-pane fade" id="v-pills-flowing-metal" role="tabpanel" aria-labelledby="v-pills-flowing-metal-tab">
 				  <div class="container overflow-auto" style="width:70vw; height:60vh;" id="scroll-flowingMetal"></div>
+				</div>
+				<div class="tab-pane fade" id="v-pills-ponderous-orb" role="tabpanel" aria-labelledby="v-pills-ponderous-orb-tab">
+				  <div class="container overflow-auto" style="width:70vw; height:60vh;" id="scroll-ponderousOrb"></div>
 				</div>
 			  </div>
 			  
@@ -140,6 +148,7 @@
 				<hr style="margin-bottom:5;"><span>Performance Spaces</span><hr  style="margin-top:7;">
 				<button class="nav-link" id="v-pills-streetCorner-tab" data-bs-toggle="pill" data-bs-target="#v-pills-streetCorner" type="button" role="tab" aria-controls="v-pills-streetCorner" aria-selected="false">Street Corner</button>
 				<button class="nav-link" style="display: none;" id="shopTab-inkyStage" data-bs-toggle="pill" data-bs-target="#v-pills-inkyStage" type="button" role="tab" aria-controls="v-pills-inkyStage" aria-selected="false">The Inky Quill Stage</button>
+				<button class="nav-link" style="display: none;" id="shopTab-theatreOfTheCommons" data-bs-toggle="pill" data-bs-target="#v-pills-theatreOfTheCommons" type="button" role="tab" aria-controls="v-pills-theatreOfTheCommons" aria-selected="false">Theatre of the Commons</button>
 			  </div>
 			  
 			  <div class="tab-content" id="v-pills-tabContent" style="width:76vw">
@@ -171,10 +180,22 @@
 				<div class="tab-pane fade" id="v-pills-inkyStage" role="tabpanel" aria-labelledby="v-pills-inkyStage-tab">
 					<div id="performance-The Inky Quill Stage"></div>
 				</div>
+				<div class="tab-pane fade" id="v-pills-theatreOfTheCommons" role="tabpanel" aria-labelledby="v-pills-theatreOfTheCommons-tab">
+					<div id="performance-Theatre of the Commons"></div>
+				</div>
 			  </div>
 			</div>
 		  </div>
+		  
+		  <div class="tab-pane fade" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab"><div class="d-flex align-items-start">
+			<button type="button" class="btn btn-primary" onclick="saveGame()">Save</button>
+			<button type="button" class="btn btn-primary" onclick="loadGame()">Load</button>
+			<button type="button" class="btn btn-primary" onclick="deleteGame()">Delete</button>
+	      </div></div>
+		  
 		</div>
+		
+		 
 		
 		<span id="alertsZone" style="position: absolute; bottom: 40px; right: 40px;"></span>
 

@@ -26,6 +26,7 @@ performanceMult = 1;
 performancePointer = -1;
 prevProfit = 0;
 prevRenown = 0;
+prevSpells = 0;
 
 
 window.setInterval(function(){
@@ -49,3 +50,5 @@ spells.forEach(hideSpellButton);
 renownLevels.forEach(createRenown);
 recalculateValues();
 displayValues();
+
+setTimeout(function() {loadGame()}, 100);

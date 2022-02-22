@@ -22,6 +22,25 @@ buffs.push ({ //Light Show
 	onTick: function() { gainPerformanceGold(3*this.amount); },
 	onRemove: function() {}
 });
+buffs.push ({ //Immortalize in Gold
+	name: "Immortalize in Gold",
+	active: false,
+	stacking: "time-set",
+	amount: 0,
+	onApply: function() {},
+	onTick: function() {},
+	onRemove: function() {}
+});
+buffs.push ({ //Mana Well
+	name: "Mana Well",
+	active: false,
+	stacking: "amount",
+	amount: 0,
+	onApply: function() {},
+	onTick: function() {},
+	onRemove: function() {}
+});
+
 buffs.push ({ //Burst of Insight
 	name: "Burst of Insight",
 	active: false,
@@ -34,4 +53,13 @@ buffs.push ({ //Burst of Insight
 	onRemove: function() {
 		transSpeedBuffMult /= 3;
 	}
+});
+buffs.push ({ //Overflowing
+	name: "Overflowing",
+	active: false,
+	stacking: "time-set",
+	amount: 0,
+	onApply: function() {},
+	onTick: function() {},
+	onRemove: function() {}
 });
